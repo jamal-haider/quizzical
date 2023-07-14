@@ -27,10 +27,13 @@ export default function Questions(){
     setItems(data.results.map(item  => {
       const options = item.incorrect_answers
       options.push(item.correct_answer)
+      const shuffledArray = shuffleArray(options)
+
+
       return {
         id: nanoid(),
         question: he.decode(item.question),
-        options: shuffleArray(options),
+        options: shuffledArray.map(option => he.decode(option)),
         correct_answer: item.correct_answer,
         checked: false
       }
@@ -60,7 +63,7 @@ export default function Questions(){
             {item.options.map((option, index) => 
                 <Option
                     key={index}
-                    value={he.decode(option)}
+                    value={option}
                     questionId={item.id}  
                     handleOption={() => handleOption(item.id, option)}
                 />
@@ -70,7 +73,7 @@ export default function Questions(){
   ))
 
   const checkAnswers = () => {
-
+    console.log('wor');
   }
 
   return(
