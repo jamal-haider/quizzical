@@ -7,7 +7,7 @@
 body {
   font-family: Karla, system-ui, Avenir, Helvetica, Arial, sans-serif;
   background: #F5F7FB;
-  background-image: url('./images/top-blob.png'), url('./images/bottom-blob.png');
+  background-image: url('./assets/images/top-blob.png'), url('./assets/images/bottom-blob.png');
   background-position: right top, left bottom;
   background-repeat: no-repeat, no-repeat;
   height: 100%;

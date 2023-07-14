@@ -28,11 +28,11 @@ export default function Questions(){
       const options = item.incorrect_answers
       options.push(item.correct_answer)
       return {
-          correct_answer: item.correct_answer,
-          options: shuffleArray(options),
-          question: he.decode(item.question),
-          id: nanoid(),
-          checked: false
+        id: nanoid(),
+        question: he.decode(item.question),
+        options: shuffleArray(options),
+        correct_answer: item.correct_answer,
+        checked: false
       }
     }))
     setLoading(false)
@@ -42,8 +42,15 @@ export default function Questions(){
     getData()
   }, [])
 
-  const handleOption = (id, option) => {
-    console.log(id, option)
+  console.log(items)
+
+  const handleOption = (questionId, option) => {
+    setItems(prevItems => prevItems.map(item => {
+      return (item.id === questionId)
+        ? { ...item, checked: true }
+        : item
+      }
+    ))
   }
 
   const itemsEl = items.map(item => (
@@ -54,13 +61,17 @@ export default function Questions(){
                 <Option
                     key={index}
                     value={he.decode(option)}
-                    questionId={item.id}
+                    questionId={item.id}  
                     handleOption={() => handleOption(item.id, option)}
                 />
             )}
         </div>
     </div>
-))
+  ))
+
+  const checkAnswers = () => {
+
+  }
 
   return(
     <div className="questions__list">
@@ -74,7 +85,7 @@ export default function Questions(){
           {itemsEl}
           <div className="questions__list-results">
               {/* <h3>You scored {score}/5 correct answers</h3> */}
-              <button className="check-answers">Check answers</button>
+              <button className="check-answers" onClick={checkAnswers}>Check answers</button>
           </div>
         </>
       }
