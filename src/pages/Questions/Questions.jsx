@@ -25,8 +25,7 @@ export default function Questions(){
     const data = await res.json()
 
     setItems(data.results.map(item  => {
-      const options = [...item.incorrect_answers]
-      options.push(item.correct_answer)
+      const options = [...item.incorrect_answers, item.correct_answer]
       const shuffledArray = shuffleArray(options)
 
       return {
