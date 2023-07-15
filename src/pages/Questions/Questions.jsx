@@ -8,7 +8,7 @@ import Option from "../../components/Option/Option";
 export default function Questions(){
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
-  const [gameOn, setGameOn] = useState(true)
+  
 
   function shuffleArray(array){
     for(let i = array.length - 1; i > 0; i -- ){
