@@ -11,13 +11,22 @@ export default function Questions(){
 
 
   function shuffleArray(array){
-    let currentIndex = array.length,  randomIndex;
-    while(currentIndex !== 0){
-        randomIndex = Math.floor(Math.random() * currentIndex)
-        currentIndex --
-        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]
+
+    for(let i = array.length - 1; i > 0; i -- ){
+      const randomIndex = Math.floor(Math.random() * (i + 1));
+      [array[i], array[randomIndex]] = [array[randomIndex], array[i]];
     }
+
     return array
+
+    // let currentIndex = array.length
+    // let randomIndex
+
+    // while(currentIndex != 0){
+    //     randomIndex = Math.floor(Math.random() * currentIndex)
+    //     currentIndex --
+    //     [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]
+    // }
   }
 
   const getData = async () =>  {
@@ -27,13 +36,13 @@ export default function Questions(){
     setItems(data.results.map(item  => {
       const options = [...item.incorrect_answers, item.correct_answer]
       // const options = [...item.incorrect_answers]
-      // const shuffledArray = shuffleArray(options)
+      const shuffledArray = shuffleArray(options)
 
       return {
         id: nanoid(),
         question: he.decode(item.question),
-        // options: shuffledArray.map(option => he.decode(option)),
-        options: options,
+        options: shuffledArray.map(option => he.decode(option)),
+        // options: options,
         correct_answer: item.correct_answer,
         checked: false
       }
