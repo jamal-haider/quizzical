@@ -4,10 +4,13 @@ import he from "he"
 import "./Questions.scss"
 import { nanoid } from "nanoid";
 import Option from "../../components/Option/Option";
+import { Link } from "react-router-dom";
 
 export default function Questions(){
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
+  const [score, setScore] = useState(null)
+  const [gameOn, setGameOn] = useState(true)
 
 
   function shuffleArray(array){
@@ -42,24 +45,22 @@ export default function Questions(){
         id: nanoid(),
         question: he.decode(item.question),
         options: shuffledArray.map(option => he.decode(option)),
-        // options: options,
         correct_answer: item.correct_answer,
-        checked: false
       }
     }))
     setLoading(false)
   }
   
   useEffect(() => {
+    setGameOn(true)
+    setLoading(true)
     getData()
-  }, [])
-
-  console.log(items)
+  }, [gameOn])
 
   const handleOption = (questionId, option) => {
     setItems(prevItems => prevItems.map(item => {
       return (item.id === questionId)
-        ? { ...item, checked: true }
+        ? { ...item, checked_answer: option }
         : item
       }
     ))
@@ -82,8 +83,21 @@ export default function Questions(){
   ))
 
   const checkAnswers = () => {
-    console.log('wor');
+    let calulateScore = 0
+    items.forEach(item => {
+      if(item.checked_answer === item.correct_answer){
+        calulateScore++
+      }
+    })
+    setScore(calulateScore)
   }
+
+  const newGame = () =>{
+    setGameOn(false)
+    setScore(null)
+  }
+  
+  console.log(score)
 
   return(
     <div className="questions__list">
@@ -96,8 +110,15 @@ export default function Questions(){
         <>
           {itemsEl}
           <div className="questions__list-results">
-              {/* <h3>You scored {score}/5 correct answers</h3> */}
-              <button className="check-answers" onClick={checkAnswers}>Check answers</button>
+              {
+                score === null ? 
+                  <button className="main-button" onClick={checkAnswers}>Check answers</button>
+                :
+                  <>
+                    <h3>You scored {score}/5 correct answers</h3> 
+                    <button className="main-button" onClick={newGame}>New Game</button>
+                  </>
+              }
           </div>
         </>
       }

@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  height: 89vh;
   justify-content: center;
   color: var(--primary-color);
   font-size: 1.3em;
@@ -24,6 +24,8 @@
   }
 
   @media screen and (min-width: 720px) {
-    font-size:1.5em;
+    font-size:1.6em;
+    box-sizing: border-box;
+    
   }
 }
