@@ -83,7 +83,7 @@ export default function Questions(){
           {itemsEl}
           <div className="questions__list-results">
               {/* <h3>You scored {score}/5 correct answers</h3> */}
-              <button className="check-answers" onClick={checkAnswers}>Check answers</button>
+              <button className="main-button" onClick={checkAnswers}>Check answers</button>
           </div>
         </>
       }
