@@ -8,25 +8,14 @@ import Option from "../../components/Option/Option";
 export default function Questions(){
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
-
+  const [gameOn, setGameOn] = useState(true)
 
   function shuffleArray(array){
-
     for(let i = array.length - 1; i > 0; i -- ){
       const randomIndex = Math.floor(Math.random() * (i + 1));
       [array[i], array[randomIndex]] = [array[randomIndex], array[i]];
     }
-
     return array
-
-    // let currentIndex = array.length
-    // let randomIndex
-
-    // while(currentIndex != 0){
-    //     randomIndex = Math.floor(Math.random() * currentIndex)
-    //     currentIndex --
-    //     [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]
-    // }
   }
 
   const getData = async () =>  {
@@ -35,9 +24,7 @@ export default function Questions(){
 
     setItems(data.results.map(item  => {
       const options = [...item.incorrect_answers, item.correct_answer]
-      // const options = [...item.incorrect_answers]
       const shuffledArray = shuffleArray(options)
-
       return {
         id: nanoid(),
         question: he.decode(item.question),
@@ -54,7 +41,6 @@ export default function Questions(){
     getData()
   }, [])
 
-  console.log(items)
 
   const handleOption = (questionId, option) => {
     setItems(prevItems => prevItems.map(item => {
@@ -82,7 +68,7 @@ export default function Questions(){
   ))
 
   const checkAnswers = () => {
-    console.log('wor');
+    
   }
 
   return(
