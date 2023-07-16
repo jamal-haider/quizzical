@@ -58,21 +58,22 @@
     
   }
 
-
-  
-  
-
   .questions__list-results{
-    
+    width: 100%;
     display: flex;
-    place-items: center;
-    
-    
-    
-    
+    flex-direction: column;
+    text-align: center;
+    margin: 0 auto;
+    color: var(--primary-color);
 
-
-
+    
+    @media screen and (min-width: 1020px) {
+      display: flex;
+      place-items: center;  
+      width: 65%;
+      flex-direction: row;
+    }
+    
   }
 
   .main-button{
