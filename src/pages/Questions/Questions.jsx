@@ -10,9 +10,9 @@ export default function Questions(){
   const [loading, setLoading] = useState(true)
   const [score, setScore] = useState(0)
   const [gameOn, setGameOn] = useState(true)
+  const [playAgain, setPlayAgain] = useState(false)
   
 
-  
   
   function shuffleArray(array){
     for(let i = array.length - 1; i > 0; i -- ){
@@ -47,8 +47,9 @@ export default function Questions(){
   }
   
   useEffect(() => {
+    
     getData()
-  }, [])
+  }, [playAgain])
 
  
   const handleOption = (questionId, inputOption) => {
@@ -123,7 +124,9 @@ export default function Questions(){
   }
 
   const newGame = () => {
-
+    setPlayAgain(true)
+    setGameOn(true)
+    setScore(0)
   }
 
   return(
