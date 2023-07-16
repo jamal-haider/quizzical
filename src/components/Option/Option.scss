@@ -1,0 +1,20 @@
+.transparent{
+  background-color: transparent;
+}
+
+.wrong{
+  background-color: #F8BCBC;
+}
+
+.correct{
+  background-color: #94D7A2;
+}
+
+.checked{
+  background-color: #D6DBF5;
+}
+
+.disabled__class{
+  pointer-events: none ; 
+  opacity: 0.7;
+}

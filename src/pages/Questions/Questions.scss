@@ -10,7 +10,6 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-
   gap: 2.5em;
   
   .item{
@@ -39,7 +38,7 @@
         padding: .35rem 2.15rem;
         border: #293264 1px solid;
         border-radius: 5px;
-        background-color: transparent;
+        // background-color: transparent;
         cursor: pointer;
       }
 
@@ -47,15 +46,14 @@
         display: none;
       
         &:checked + label{
-            background-color: #D6DBF5;
+            // background-color: #D6DBF5;
             cursor: pointer;
         }
       }
     }
 
     @media screen and (min-width: 720px) {
-      font-size: 19px;
-      
+      font-size: 19px;   
     }
     
   }
@@ -65,28 +63,34 @@
   
 
   .questions__list-results{
+    
     display: flex;
-    align-items: center;
+    
+    
+    
 
-    .main-button{
-      background-color: #4D5B9E;
-      padding: .5rem 1.8rem;
-      font-weight: 600;
-      font-family: inherit;
-      border-radius: 5px;
-      width: 250px;
-      border: 0;
-      color: white;
-      font-size: 1.15em;
-      margin: 1rem auto;
-      cursor: pointer;
-    }
 
+
+  }
+
+  .main-button{
+    background-color: #4D5B9E;
+    padding: .5rem 1.8rem;
+    font-weight: 600;
+    font-family: inherit;
+    border-radius: 5px;
+    padding: 1rem 3rem;
+    border: 0;
+    color: white;
+    font-size: 1.15em;
+    margin: 1rem auto;
+    cursor: pointer;
   }
 
   @media screen and (min-width:720px) {
     padding: 1rem 4rem;
     // font-size: 18px;
+    font-size: 19px;
   }
 
   @media screen and (min-width:1020px) {

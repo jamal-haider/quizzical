@@ -8,8 +8,12 @@ import Option from "../../components/Option/Option";
 export default function Questions(){
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
+  const [score, setScore] = useState(0)
+  const [gameOn, setGameOn] = useState(true)
   
 
+  
+  
   function shuffleArray(array){
     for(let i = array.length - 1; i > 0; i -- ){
       const randomIndex = Math.floor(Math.random() * (i + 1));
@@ -28,10 +32,15 @@ export default function Questions(){
       return {
         id: nanoid(),
         question: he.decode(item.question),
-        options: shuffledArray.map(option => he.decode(option)),
+        options: shuffledArray.map(option => (
+          {
+            text: he.decode(option),
+            backgroundClass: 'transparent',
+          }
+          )),
         // options: options,
         correct_answer: item.correct_answer,
-        checked: false
+        checked_answer: '',
       }
     }))
     setLoading(false)
@@ -41,11 +50,20 @@ export default function Questions(){
     getData()
   }, [])
 
-
-  const handleOption = (questionId, option) => {
+ 
+  const handleOption = (questionId, inputOption) => {
+    
     setItems(prevItems => prevItems.map(item => {
       return (item.id === questionId)
-        ? { ...item, checked: true }
+        ? { 
+          ...item,
+          checked_answer: inputOption,
+          options: item.options.map(option => (
+            {
+              ...option,
+              backgroundClass: option.text === inputOption ? 'checked' : 'transparent'
+          }))
+        }
         : item
       }
     ))
@@ -56,19 +74,56 @@ export default function Questions(){
         <h2>{item.question}</h2>
         <div className="options">
             {item.options.map((option, index) => 
-                <Option
-                    key={index}
-                    value={option}
-                    questionId={item.id}  
-                    handleOption={() => handleOption(item.id, option)}
-                />
+                {
+                  return <Option
+                      key={index}
+                      value={option.text}
+                      backgroundClass={option.backgroundClass}
+                      questionId={item.id}
+                      handleOption={() => handleOption(item.id, option.text)}
+                      
+                  />
+                }
             )}
         </div>
     </div>
   ))
 
   const checkAnswers = () => {
+    setGameOn(false)
+    setItems(prev => prev.map(item => (
+      {
+        ...item,
+        options: item.options.map(option => {
+
+          let backgroundClass = 'disabled__class'
+          if(item.correct_answer === option.text){
+            backgroundClass += ' correct'
+          }else if(item.checked_answer !== item.correct_answer && item.checked_answer === option.text){
+            backgroundClass += ' wrong'
+          }
+
+          return {
+            ...option,
+            backgroundClass: backgroundClass
+          }
+        })
+      }
+    )))
+
+    // let newScore = items.reduce((acc, item) => {
+    //   return (item.checked_answer == item.correct_answer) ? acc+1 : acc
+    // }, 0)
     
+    setScore(items.reduce((acc, item) => 
+      {
+      return (item.checked_answer == item.correct_answer) ? acc + 1 : acc
+    }, 0))
+
+  }
+
+  const newGame = () => {
+
   }
 
   return(
@@ -81,10 +136,16 @@ export default function Questions(){
         : 
         <>
           {itemsEl}
-          <div className="questions__list-results">
-              {/* <h3>You scored {score}/5 correct answers</h3> */}
-              <button className="main-button" onClick={checkAnswers}>Check answers</button>
-          </div>
+          
+          {gameOn
+            ? <button className="main-button" onClick={checkAnswers}>Check answers</button>
+            :
+              <div className="questions__list-results">
+                <h3>You scored {score}/5 correct answers</h3>
+                <button className="main-button" onClick={newGame}>New game</button>
+              </div>
+          }
+
         </>
       }
     </div>

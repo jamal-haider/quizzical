@@ -2,22 +2,21 @@ import "./Option.scss"
 
 export default function Option(props){
 
-    const styles = {
-        // backgroundColor: props.checked ? "#F8BCBC" : "#94D7A2"
-    }
-
     return(
         <>
             <input
               type="radio"
-              id={props.questionId + props.value}
+              id={props.questionId + props.text}
               name={props.questionId + `-correct-option`}
-              value={props.value}
-              onClick={props.handleOption} />
+              value={props.text}
+              
+               />
 
             <label
-              style={styles}
+              onClick={props.handleOption}
+              className={`${props.backgroundClass}`}
               htmlFor={props.questionId + props.value}
+              
             >
               {props.value}
             </label>
