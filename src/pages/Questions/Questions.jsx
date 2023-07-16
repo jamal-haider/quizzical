@@ -44,10 +44,10 @@ export default function Questions(){
       }
     }))
     setLoading(false)
+    setPlayAgain(false)
   }
   
   useEffect(() => {
-    
     getData()
   }, [playAgain])
 
@@ -69,26 +69,6 @@ export default function Questions(){
       }
     ))
   }
-
-  const itemsEl = items.map(item => (
-    <div className="item" key={item.question}>
-        <h2>{item.question}</h2>
-        <div className="options">
-            {item.options.map((option, index) => 
-                {
-                  return <Option
-                      key={index}
-                      value={option.text}
-                      backgroundClass={option.backgroundClass}
-                      questionId={item.id}
-                      handleOption={() => handleOption(item.id, option.text)}
-                      
-                  />
-                }
-            )}
-        </div>
-    </div>
-  ))
 
   const checkAnswers = () => {
     setGameOn(false)
@@ -126,6 +106,7 @@ export default function Questions(){
   const newGame = () => {
     setPlayAgain(true)
     setGameOn(true)
+    setLoading(true)
     setScore(0)
   }
 
@@ -138,8 +119,28 @@ export default function Questions(){
         </div>
         : 
         <>
-          {itemsEl}
-          
+          {
+            items.map(item => (
+              <div className="item" key={item.question}>
+                  <h2>{item.question}</h2>
+                  <div className="options">
+                      {item.options.map((option, index) => 
+                          {
+                            return <Option
+                                key={index}
+                                value={option.text}
+                                backgroundClass={option.backgroundClass}
+                                questionId={item.id}
+                                handleOption={() => handleOption(item.id, option.text)}
+                                
+                            />
+                          }
+                      )}
+                  </div>
+              </div>
+            ))
+          }
+
           {gameOn
             ? <button className="main-button" onClick={checkAnswers}>Check answers</button>
             :
