@@ -108,6 +108,10 @@ export default function Questions(){
     setGameOn(true)
     setLoading(true)
     setScore(0)
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
   }
 
   return(
