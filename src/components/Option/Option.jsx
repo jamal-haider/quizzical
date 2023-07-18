@@ -1,7 +1,7 @@
 import "./Option.scss"
 
-export default function Option({value, backgroundClass, handleOption}){
+export default function Option({children, backgroundClass, handleOption, disabled}){
     return(
-      <button onClick={handleOption} className={backgroundClass}>{value}</button>  
+      <button type="button" onClick={handleOption} className={backgroundClass} disabled={disabled}>{children}</button>  
     )
 }

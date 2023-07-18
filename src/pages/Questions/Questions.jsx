@@ -36,6 +36,7 @@ export default function Questions(){
           {
             text: he.decode(option),
             backgroundClass: 'transparent',
+            disabled: false
           }
           )),
         // options: options,
@@ -77,29 +78,29 @@ export default function Questions(){
         ...item,
         options: item.options.map(option => {
 
-          let backgroundClass = 'disabled__class'
+          let backgroundClass
           if(item.correct_answer === option.text){
-            backgroundClass += ' correct'
+            backgroundClass = 'correct'
           }else if(item.checked_answer !== item.correct_answer && item.checked_answer === option.text){
-            backgroundClass += ' wrong'
+            backgroundClass = 'wrong'
           }
 
           return {
             ...option,
-            backgroundClass: backgroundClass
+            backgroundClass: backgroundClass,
+            disabled: true
           }
         })
       }
     )))
 
-    // let newScore = items.reduce((acc, item) => {
-    //   return (item.checked_answer == item.correct_answer) ? acc+1 : acc
-    // }, 0)
+   
     
     setScore(items.reduce((acc, item) => 
       {
-      return (item.checked_answer == item.correct_answer) ? acc + 1 : acc
-    }, 0))
+        return (item.checked_answer == item.correct_answer) ? acc + 1 : acc
+      },0)
+    )
 
   }
 
@@ -131,13 +132,14 @@ export default function Questions(){
                       {item.options.map((option, index) => 
                           {
                             return <Option
-                                key={index}
-                                value={option.text}
-                                backgroundClass={option.backgroundClass}
-                                questionId={item.id}
-                                handleOption={() => handleOption(item.id, option.text)}
-                                
-                            />
+                              key={index}
+                              backgroundClass={option.backgroundClass}
+                              questionId={item.id}
+                              disabled={option.disabled}
+                              handleOption={() => handleOption(item.id, option.text)}
+                            >
+                              {option.text}
+                            </Option>
                           }
                       )}
                   </div>
