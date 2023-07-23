@@ -134,7 +134,6 @@ export default function Questions(){
                             return <Option
                               key={index}
                               className={option.backgroundClass}
-                              questionId={item.id}
                               disabled={option.disabled}
                               onClick={() => handleOption(item.id, option.text)}
                             >
