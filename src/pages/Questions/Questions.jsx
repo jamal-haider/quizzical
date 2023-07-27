@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import he from "he"
 import "./Questions.scss"
 import { nanoid } from "nanoid";
-import Option from "../../components/Option/Option";
+import Item from "../../Item/Item";
 
 export default function Questions(){
   const [items, setItems] = useState([])
@@ -11,8 +11,6 @@ export default function Questions(){
   const [score, setScore] = useState(0)
   const [gameOn, setGameOn] = useState(true)
   const [playAgain, setPlayAgain] = useState(false)
-  
-
   
   function shuffleArray(array){
     for(let i = array.length - 1; i > 0; i -- ){
@@ -32,14 +30,11 @@ export default function Questions(){
       return {
         id: nanoid(),
         question: he.decode(item.question),
-        options: shuffledArray.map(option => (
-          {
+        options: shuffledArray.map(option => ({
             text: he.decode(option),
             backgroundClass: 'transparent',
             disabled: false
-          }
-          )),
-        // options: options,
+        })),
         correct_answer: item.correct_answer,
         checked_answer: '',
       }
@@ -54,7 +49,7 @@ export default function Questions(){
 
  
   const handleOption = (questionId, inputOption) => {
-    
+    // console.log(questionId, inputOption)
     setItems(prevItems => prevItems.map(item => {
       return (item.id === questionId)
         ? { 
@@ -126,23 +121,7 @@ export default function Questions(){
         <>
           {
             items.map(item => (
-              <div className="item" key={item.question}>
-                  <h2>{item.question}</h2>
-                  <div className="options">
-                      {item.options.map((option, index) => 
-                          {
-                            return <Option
-                              key={index}
-                              className={option.backgroundClass}
-                              disabled={option.disabled}
-                              onClick={() => handleOption(item.id, option.text)}
-                            >
-                              {option.text}
-                            </Option>
-                          }
-                      )}
-                  </div>
-              </div>
+              <Item {...item} handleOption={handleOption} key={item.id} />
             ))
           }
 
