@@ -49,7 +49,6 @@ export default function Questions(){
 
  
   const handleOption = (questionId, inputOption) => {
-    // console.log(questionId, inputOption)
     setItems(prevItems => prevItems.map(item => {
       return (item.id === questionId)
         ? { 
